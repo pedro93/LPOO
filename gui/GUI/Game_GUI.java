@@ -48,24 +48,41 @@ public class Game_GUI extends JFrame {
 	public Game_GUI() {
 		initGame();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+<<<<<<< HEAD
 		setBounds(100, 100, 300, 300);
+=======
+		setBounds(100, 100, 450, 300);
+>>>>>>> b8f82cf3243ef4a63d3a09fbe1727a6cc0a75ac6
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
+<<<<<<< HEAD
 		JPanel panel = new MazePanel(230,283);
 		panel.setBounds(0, 0, 434, 300-69);
+=======
+		JPanel panel = new MazePanel();
+		panel.setBounds(10, 11, 414, 201);
+>>>>>>> b8f82cf3243ef4a63d3a09fbe1727a6cc0a75ac6
 		contentPane.add(panel);
 		panel.setLayout(new BorderLayout(0, 0));
 
 
 		JPanel panel_1 = new JPanel();
+<<<<<<< HEAD
 		panel_1.setBounds(0, 230, 284, 31);
 		contentPane.add(panel_1);
 
 		JButton btnNewGame = new JButton("New Game");
 		btnNewGame.setBounds(32, 5, 100, 23);
+=======
+		panel_1.setBounds(0, 223, 434, 38);
+		contentPane.add(panel_1);
+
+		JButton btnNewGame = new JButton("New Game");
+		btnNewGame.setBounds(40, 5, 131, 23);
+>>>>>>> b8f82cf3243ef4a63d3a09fbe1727a6cc0a75ac6
 		btnNewGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
@@ -74,7 +91,11 @@ public class Game_GUI extends JFrame {
 		panel_1.add(btnNewGame);
 
 		JButton btnExit = new JButton("Exit");
+<<<<<<< HEAD
 		btnExit.setBounds(300-132, 5, 100, 23);
+=======
+		btnExit.setBounds(259, 5, 131, 23);
+>>>>>>> b8f82cf3243ef4a63d3a09fbe1727a6cc0a75ac6
 		panel_1.add(btnExit);
 	}
 
