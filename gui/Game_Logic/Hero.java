@@ -1,5 +1,6 @@
+package Game_Logic;
 import java.util.Random;
-
+import maze.Labirynth;
 
 public class Hero extends Mobile {
 
@@ -63,27 +64,27 @@ public class Hero extends Mobile {
 	public void heroMovement(String s, Labirynth maze) {
 		switch (s) {
 		case "w":
-			if(!maze.getGenerated_maze()[y-1][x].filled || (maze.EXIT_Y == y-1 && maze.EXIT_X == x) )
-				y--;
+			if(!maze.getGenerated_maze()[getY()-1][getX()].isFilled() || (maze.EXIT_Y == getY()-1 && maze.EXIT_X == getX()) )
+				setY(getY() - 1);
 			break;
 		case "s":
-			if(!maze.getGenerated_maze()[y+1][x].filled || (maze.EXIT_Y == y+1 && maze.EXIT_X == x) )
-				y++;
+			if(!maze.getGenerated_maze()[getY()+1][getX()].isFilled() || (maze.EXIT_Y == getY()+1 && maze.EXIT_X == getX()) )
+				setY(getY() + 1);
 			break;
 		case "a":
-			if(!maze.getGenerated_maze()[y][x-1].filled || (maze.EXIT_Y == y && maze.EXIT_X == x-1) )
-				x--;
+			if(!maze.getGenerated_maze()[getY()][getX()-1].isFilled() || (maze.EXIT_Y == getY() && maze.EXIT_X == getX()-1) )
+				setX(getX() - 1);
 			break;
 		case "d":
-			if(!maze.getGenerated_maze()[y][x+1].filled || (maze.EXIT_Y == y && maze.EXIT_X == x+1))
-				x++;
+			if(!maze.getGenerated_maze()[getY()][getX()+1].isFilled() || (maze.EXIT_Y == getY() && maze.EXIT_X == getX()+1))
+				setX(getX() + 1);
 			break;
 		case "r": //send eagle
-			if(symbol != 'A' && !dead && !eagle_sent) //hero is unarmed and alive and eagle is ready to fly
+			if(getSymbol() != 'A' && !isDead() && !eagle_sent) //hero is unarmed and alive and eagle is ready to fly
 			{
 				setEagle_sent(true);
-				lastHero_x = x;
-				lastHero_y = y;
+				lastHero_x = getX();
+				lastHero_y = getY();
 			}
 			else
 				setEagle_sent(false);
@@ -101,19 +102,19 @@ public class Hero extends Mobile {
 
 	public Hero init(Game_Loop jogo) {
 		Hero auxHero=new Hero();
-		auxHero.dead=false;
-		auxHero.symbol='H';
+		auxHero.setDead(false);
+		auxHero.setSymbol('H');
 		do 
 		{
 			Random rand = new Random();
-			auxHero.x=rand.nextInt(Labirynth.getInstance().COL_SIZE-2)+1;
-			auxHero.y=rand.nextInt(Labirynth.getInstance().ROW_SIZE-2)+1;
-		} while (Labirynth.getInstance().getGenerated_maze()[auxHero.y][auxHero.x].filled || jogo.ocupied_byElements(auxHero.x, auxHero.y) || jogo.nextToAnyDragon(auxHero.x,auxHero.y));
+			auxHero.setX(rand.nextInt(Labirynth.getInstance().COL_SIZE-2)+1);
+			auxHero.setY(rand.nextInt(Labirynth.getInstance().ROW_SIZE-2)+1);
+		} while (Labirynth.getInstance().getGenerated_maze()[auxHero.getY()][auxHero.getX()].isFilled() || jogo.ocupied_byElements(auxHero.getX(), auxHero.getY()) || jogo.nextToAnyDragon(auxHero.getX(),auxHero.getY()));
 
 		auxHero.eagle = 'v';
 		auxHero.eagle_alive = true;
-		auxHero.eagle_x = auxHero.x;
-		auxHero.eagle_y = auxHero.y;
+		auxHero.eagle_x = auxHero.getX();
+		auxHero.eagle_y = auxHero.getY();
 		auxHero.setEagle_sent(false);
 		auxHero.lastHero_x=0;
 		auxHero.lastHero_y=0;
@@ -125,14 +126,14 @@ public class Hero extends Mobile {
 	public void eagleMovement(Game_Loop jogo) 
 	{
 
-		if(jogo.HEROI.dead) //hero dead so cant send eagle
+		if(jogo.HEROI.isDead()) //hero dead so cant send eagle
 		{
 			eagle = ' '; 
 			eagle_sent = false;
 			return;
 		}
 
-		if(jogo.ESPADA.used && jogo.HEROI.symbol == 'A') // sword already picked up by hero(only possible Game element who can besides eagle)
+		if(jogo.ESPADA.isUsed() && jogo.HEROI.getSymbol() == 'A') // sword already picked up by hero(only possible Game element who can besides eagle)
 		{
 			eagle = ' ';
 			eagle_sent = false;
@@ -147,28 +148,28 @@ public class Hero extends Mobile {
 				eagle = 'y';
 				return;
 			}*/
-			if (eagle_x < jogo.ESPADA.x) //not killed imediatly by dragons and must move right to get sword
+			if (eagle_x < jogo.ESPADA.getX()) //not killed imediatly by dragons and must move right to get sword
 			{
 				eagle_x++;
 			}
-			else if(eagle_x > jogo.ESPADA.x) //must go left
+			else if(eagle_x > jogo.ESPADA.getX()) //must go left
 			{
 				eagle_x--;
 			}
-			else if (eagle_y<jogo.ESPADA.y) //eagle is in column and not dead yet and must go down
+			else if (eagle_y<jogo.ESPADA.getY()) //eagle is in column and not dead yet and must go down
 			{
 				eagle_y++;
 			}
-			else if (eagle_y>jogo.ESPADA.y) //in column, not dead and must go up
+			else if (eagle_y>jogo.ESPADA.getY()) //in column, not dead and must go up
 			{
 				eagle_y--;
 			}
 
-			if(eagle_alive && eagle_x == jogo.ESPADA.x && eagle_y == jogo.ESPADA.y && !jogo.ESPADA.used && eagle !='y') //eagle not dead, on top of sword location, sword has not yet been picked up, and eagle does not have sword with it(for whatever possible reason (possible redundancy))
+			if(eagle_alive && eagle_x == jogo.ESPADA.getX() && eagle_y == jogo.ESPADA.getY() && !jogo.ESPADA.isUsed() && eagle !='y') //eagle not dead, on top of sword location, sword has not yet been picked up, and eagle does not have sword with it(for whatever possible reason (possible redundancy))
 			{
 				if(!jogo.nextToAnyDragon(eagle_x, eagle_y))
 				{
-					jogo.ESPADA.used=true;
+					jogo.ESPADA.setUsed(true);
 					eagle = 'y';
 					return;
 				}
@@ -190,16 +191,16 @@ public class Hero extends Mobile {
 				{
 					eagle_alive = false;
 					eagle = ' ';
-					jogo.ESPADA.symbol = 'E';
-					jogo.ESPADA.used = false;
-					jogo.ESPADA.x=eagle_x;
-					jogo.ESPADA.y=eagle_y;
+					jogo.ESPADA.setSymbol('E');
+					jogo.ESPADA.setUsed(false);
+					jogo.ESPADA.setX(eagle_x);
+					jogo.ESPADA.setY(eagle_y);
 					System.out.println("!!!!!!!!!!!!!Eagle has died!!!!!!!!!!!");
 					return;
 				}
-				else if (eagle_x == jogo.HEROI.x && eagle_y==jogo.HEROI.y && eagle_alive && !jogo.HEROI.dead) //hero is where he last was when eagle left him and they are both alive
+				else if (eagle_x == jogo.HEROI.getX() && eagle_y==jogo.HEROI.getY() && eagle_alive && !jogo.HEROI.isDead()) //hero is where he last was when eagle left him and they are both alive
 				{
-					jogo.HEROI.symbol = 'A';
+					jogo.HEROI.setSymbol('A');
 					eagle_sent = false; //eagle done its job can return to master
 				}
 			}
