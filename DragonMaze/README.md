@@ -1,11 +1,14 @@
-# OO Lab Projects#
+# OO Project 1#
+## A pacman like project ##
 
-In the scope of object-orientated computer science class 2 projects were created to apply the basic concepts learned using JAVA.
+A simple pacman-style game developed using a object-orientated programming paradigm.
 
-Each folder is a project containing the information required to run.
+Besides from the game itself, contains:
+ - A random maze generator for a given size
+ - A sandbox development area for mazes
 
-### Group members ###
+## Usage ##
+Import src code into a java project (tested on eclipse).
+Run program to start playing!
 
-* Carlos Matias, link: http://sigarra.up.pt/feup/pt/fest_geral.cursos_list?pv_num_unico=201105623
-
-* Pedro Silva, link: https://sigarra.up.pt/feup/en/fest_geral.cursos_list?pv_num_unico=201109244
+If you would like to play the game as an executable, simply generate a jar from the project created
