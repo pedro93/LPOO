@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.kilobolt.robotgame"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    
+    <uses-sdk
+        android:minSdkVersion="5"
+        android:targetSdkVersion="17" />
+
+    <application
+        android:icon="@drawable/icon"
+        android:label="Trap Shooter" >
+        <activity
+            android:name="com.trapShooter.src.startGame"
+            android:configChanges="keyboard|keyboardHidden|orientation"
+            android:label="Trap Shooter"
+            android:screenOrientation="landscape" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="com.trapShooter.src.Input"
+            android:screenOrientation="landscape"
+            android:label="@string/title_activity_input"
+            android:parentActivityName="com.trapShooter.src.startGame" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.kilobolt.robotgame.SampleGame" />
+        </activity>
+    </application>
+
+</manifest>
